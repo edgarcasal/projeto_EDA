@@ -11,6 +11,27 @@
 #include "funcoes.h"
 #include "malloc.h"
 
+/// @brief Cria uma antena nova com frequência e coordenadas
+/// @param freq Tipo de frequência (Aa até Zz)
+/// @param x Coordenada x da nova antena
+/// @param y Coordenada y da nova antena
+/// @return Devolve a nova antena criada
+Antena * criarAntena (char freq, int x, int y) {
+    Antena * nova;
+
+    //Aloca espaço para a nova antena
+    nova = (Antena*)malloc(sizeof(Antena));
+
+    // Se o alocamento de espaço foi criado, então cria a nova antena com a frequência e coordenadas
+    if (nova != NULL) {
+        nova->freq = freq;
+        nova->x = x;
+        nova->y = y;
+        nova->prox = NULL;
+    }
+
+    return nova;
+}
 
 /// @brief Carrega os dados das antenas de um ficheiro de texto para uma lista ligada
 /// @param nomeficheiro Nome do ficheiro de texto que contém o mapa de antenas
@@ -65,29 +86,34 @@ Antena* carregarAntenas(char* nomeFicheiro) {
 }
 
 
-/// @brief Cria e insere uma antena no início da lista ligada
+/// @brief Insere uma antena na lista ligada em forma ordenada
 /// @param h Apontador para o início da lista de antenas
-/// @param freq Frequência da antena (A-Z, a-z), ex: 'A', 'b'
-/// @param x Coordenada x da antena
-/// @param y Coordenada y da antena
+/// @param nova Apontador para a nova antena a inserir
 /// @return Devolve o novo início da lista
-Antena* inserirAntena (Antena* h, char freq, int x, int y) {
-    Antena* nova;
+Antena* inserirAntena (Antena* h, Antena* nova) {        
 
-    nova = (Antena*)malloc(sizeof(Antena));     //Alocamento de espaço para o nova antena
-
-    //Verifica se houve falha na alocação, devolve a lista inicial
+    //Se a nova antena for nula, não faz nada e devolve a lista
     if (nova == NULL) {
         return h;
     }
 
-    //Nova fica com os valores inseridos de frequência, e coordenadas x e y
-    nova -> freq = freq;
-    nova -> x = x;
-    nova -> y = y;
-    nova -> prox = h;   //Liga à antena anterior
+// Se a lista estiver vazia ou se a nova antena tiver de ser inserida antes da primeira
+    if (h == NULL || nova->x < h->x || (nova->x == h->x && nova->y < h->y)) {
+        nova->prox = h;
+        return nova;
+    }
 
-    return nova;    //Devolve o Apontador para a nova antena, que fica a ser o novo início da lista ligada
+    Antena* aux = h;
+    //Percorre a lista até encontrar a posição certa para inserir
+    while (aux -> prox != NULL && (aux -> prox -> x < nova->x || (aux -> prox -> x == nova -> x && aux -> prox -> y < nova -> y))) {
+        aux = aux -> prox;
+    }
+    //Insere a nova antena na posição correta
+    nova -> prox = aux -> prox;
+    aux -> prox = nova;
+
+    //Devolve o início da lista
+    return h;
 }
 
 /// @brief Remove uma antena da lista ligada e acordo com as coordenadas (x,y)
@@ -95,7 +121,7 @@ Antena* inserirAntena (Antena* h, char freq, int x, int y) {
 /// @param x Coordenada x da antena
 /// @param y Coordenada y da antena
 /// @return Devolve o início da lista depois de remover a antena
-Antena* removerAntena (Antena * h, int x, int y) {
+Antena* removerAntena (Antena * h, int x, int y, bool *res) {
     Antena * aux = h; //Apontador auxiliar (aux) que aponta para o início da lista (h)
     Antena * aux2 = NULL; //Apontador auxiliar (aux2) que aponta para NULL (Apontador para a antena anterior)
 
@@ -120,12 +146,14 @@ Antena* removerAntena (Antena * h, int x, int y) {
     
     //Se a antena não for encontrada, devolve a lista
     if(aux == NULL) {
+        *res = false;
         return h;
     }
 
     //Remove a antena do meio ou do final
     aux2->prox = aux -> prox;
     free (aux);
+    *res = true;
 
     return h;
 }
@@ -133,19 +161,21 @@ Antena* removerAntena (Antena * h, int x, int y) {
 
 /// @brief Imprime todas as antenas de uma lista em formato tabular
 /// @param h Apontador para o início da lista de antenas
-void imprimirAntenas(Antena* h) {
-    Antena* aux = h; //Apontador auxiliar (aux) que aponta para o início da lista (h)
+bool imprimirAntenas(Antena* h) {
 
-    //Formato tabular
-    printf("ANTENAS:\n");
-    printf("| Frequência | Posição |\n");
-    printf("|------------|---------|\n");
+    //Se a lista não existir, devolve falso
+    if(h==NULL){
+        return false;
+    }
+
+    Antena* aux = h; //Apontador auxiliar (aux) que aponta para o início da lista (h)
 
     //Percorre a lista ligada e imprime cada antena e as suas coordenadas
     while (aux != NULL) {
         printf("|    %2c      | (%2d,%2d) |\n", aux->freq, aux->x, aux->y);
         aux = aux -> prox; //Avança para a próxima antena da lista
     }
+    return true;
 }
 
 
@@ -168,9 +198,7 @@ bool gravarFicheiroBinario(char * nomeFicheiro, Antena* h) {
     while (aux != NULL) {
 
         //fwrite precisa de saber onde estão os dados na memória, então precisamos de dizer para apontar para o endereço da frequência e das coordenadas
-        fwrite(&(aux->freq), sizeof(char), 1, fp);
-        fwrite(&(aux->x), sizeof(int), 1, fp);
-        fwrite(&(aux->y), sizeof(int), 1, fp);
+        fwrite(&aux, 1, sizeof(aux),fp);
         aux = aux->prox;
     }
 
@@ -178,32 +206,55 @@ bool gravarFicheiroBinario(char * nomeFicheiro, Antena* h) {
     return true;
 }
 
-/// @brief Cria e insere um efeito nefasto novo numa lista
-/// @param h Apontador para o início da lista de efeitos nefasto
-/// @param x Coordenada x do efeito nefasto
-/// @param y Coordenada y do efeito nefasto
-/// @return Apontador para o novo início da lista
-Nefasto* inserirNefasto(Nefasto* h, int x, int y) {
+/// @brief Cria novo efeito nefasto com as suas coordenadas
+/// @param x Coordenada x do novo efeito nefasto
+/// @param y Coordenada y do novo efeito nefasto
+/// @return Devolve o novo efeito nefasto criado
+Nefasto* criarNefasto (int x, int y){
     Nefasto* novo;
-    Nefasto* aux = h;
 
-    //Percorre a lista para evitar coordenadas duplicadas e caso exista devolve a lista original
-    while (aux != NULL) {
-        if (aux->x == x && aux->y == y){
-            return h;
-        }
-        aux = aux->prox;
-    }
-
-    //Alocamento de espaço 
+    //Alocamento de espaço para o novo efeito nefasto
     novo = (Nefasto*)malloc(sizeof(Nefasto));
 
-    novo->x = x;
-    novo->y = y;
-    novo->prox = h; //Insere no início da lista
+    //Se for alocado corretamente, cria o novo efeito nefasto
+    if (novo != NULL) {
+        novo -> x = x;
+        novo -> y = y;
+        novo -> prox = NULL;
+    }
 
-    return novo;    //Devolve o novo início da lista
+    //Devolve o novo efeito nefasto
+    return novo;
+}
 
+/// @brief Insere um efeito nefasto novo numa lista ligada em forma ordenada
+/// @param h Apontador para o início da lista de efeitos nefasto
+/// @param novo Apontador para o novo efeito nefasto
+/// @return Devolve a lista atualizada
+
+Nefasto* inserirNefasto(Nefasto* h, Nefasto* novo) {
+     //Se a nova antena for nula, não faz nada e devolve a lista
+    if (novo == NULL) {
+        return h;
+    }
+
+// Se a lista estiver vazia ou se a nova antena tiver de ser inserida antes da primeira
+    if (h == NULL || novo->x < h->x || (novo->x == h->x && novo->y < h->y)) {
+        novo->prox = h;
+        return novo;
+    }
+
+    Nefasto* aux = h;
+    //Percorre a lista até encontrar a posição certa para inserir
+    while (aux -> prox != NULL && (aux -> prox -> x < novo->x || (aux -> prox -> x == novo -> x && aux -> prox -> y < novo -> y))) {
+        aux = aux -> prox;
+    }
+    //Insere a nova antena na posição correta
+    novo -> prox = aux -> prox;
+    aux -> prox = novo;
+
+    //Devolve o início da lista
+    return h;
 }
 
 /// @brief Calcula as posições com efeito nefasto baseado na lista de antenas existentes
@@ -243,11 +294,11 @@ Nefasto* efeitoNefasto (Antena* h) {
 
                 //Verifica se 1) está dentro dos limites do mapa e chama a função inserirNefasto para adicionar o ponto à lista ligada
                 if (x1 >= 0 && y1 >= 0 && x1 < MAXi && y1 < MAXj) {
-                    lista = inserirNefasto(lista, x1, y1);
+                    lista = inserirNefasto(lista, criarNefasto(x1, y1));
                 }
                 //Verifica se 2) está dentro dos limites do mapa e chama a função inserirNefasto para adicionar o ponto à lista ligada  
                 if (x2 >= 0 && y2 >= 0 && x2 < MAXi && y2 < MAXj) {
-                    lista = inserirNefasto(lista, x2, y2);
+                    lista = inserirNefasto(lista, criarNefasto(x2, y2));
                 }
             }
             aux2 = aux2->prox;  //Avança para a próxima antena
@@ -260,33 +311,34 @@ Nefasto* efeitoNefasto (Antena* h) {
 
 /// @brief Função que imprime as posições dos efeitos nefastos em forma tabular
 /// @param h Apontador para o início da lista de efeitos nefastos
-void imprimirNefasto(Nefasto* h) {
+bool imprimirNefasto(Nefasto* h) {
     Nefasto* aux = h;   //Apontador auxiliar (aux) que aponta para o início da lista (h)
 
-    //Formato da tabela
-    printf("EFEITOS NEFASTOS:\n");
-    printf("| Posição |\n");
-    printf("|---------|\n");
+    if (h == NULL) {
+        return false;
+    }
 
     //Percorre a lista efeitos nefasto enquanto o proxímo elemento não é nulo, ou seja, percorre até ao final da lista ligada
     while (aux != NULL) {
         printf("| (%2d,%2d) |\n", aux->x, aux->y);
         aux = aux -> prox; //Avança para a próxima posição da lista
     }
+
+    return true;
 }
 
 
 /// @brief Imprime o mapa original e adiciona as localizações com efeito nefasto (#)
 /// @param nomeFicheiro Nome do ficheiro que contém o mapa das antenas
 /// @param h Apontador para o início da lista de efeitos nefastos
-void imprimirAntenasNefasto(char* nomeFicheiro, Nefasto* h) {
+bool imprimirAntenasNefasto(char* nomeFicheiro, Nefasto* h) {
     int linha = 0, coluna = 0;
     char c;
 
     FILE * fp = fopen(nomeFicheiro, "r"); //Abre o ficheiro em modo de leitura
 
     if (fp == NULL) { // Verifica se o ficheiro abre
-        return;
+        return false;
     }
 
     //Começa por ler o ficheiro caractere a caractere
@@ -316,4 +368,5 @@ void imprimirAntenasNefasto(char* nomeFicheiro, Nefasto* h) {
         }
     }
     fclose(fp); //Fecha o ficheiro
+    return true;
 }
