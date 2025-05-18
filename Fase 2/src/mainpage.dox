@@ -1,0 +1,14 @@
+/*! \mainpage Projeto EDA - Fase 2 (Grafos) - IPCA
+
+\section sec_sobre Sobre
+Este projeto corresponde à Fase 2 da UC de Estruturas de Dados Avançadas (EDA), focando-se na representação e manipulação de grafos em linguagem C.
+
+Cada antena é representada como um vértice de um grafo, e as adjacências entre antenas com a mesma frequência são representadas como arestas.  
+Foi implementado suporte a:
+- Percursos em profundidade (DFS)
+- Armazenamento e leitura em ficheiros binários
+- Criação dinâmica de adjacências entre vértices
+
+\section sec_autor Autor
+Edgar Casal
+*/

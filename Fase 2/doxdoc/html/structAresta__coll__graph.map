@@ -1,0 +1,4 @@
+<map id="Aresta" name="Aresta">
+<area shape="rect" id="node1" title="Representa uma aresta (ligação) entre duas antenas do grafo." alt="" coords="7,5,71,32"/>
+<area shape="rect" id="node2" href="$structVertice.html" title="Representa uma antena como vértice do grafo." alt="" coords="5,95,72,121"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Grafo" name="Grafo">
+<area shape="rect" id="node1" title="Representa o grafo, contendo a lista de antenas (vértices) e o número total de antenas." alt="" coords="5,95,64,121"/>
+<area shape="rect" id="node2" href="$structVertice.html" title="Representa uma antena como vértice do grafo." alt="" coords="45,5,112,32"/>
+<area shape="rect" id="node3" href="$structAresta.html" title="Representa uma aresta (ligação) entre duas antenas do grafo." alt="" coords="109,95,173,121"/>
+</map>

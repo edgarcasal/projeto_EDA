@@ -1,0 +1,361 @@
+\hypertarget{funcoes_8c}{}\doxysection{src/funcoes.c File Reference}
+\label{funcoes_8c}\index{src/funcoes.c@{src/funcoes.c}}
+{\ttfamily \#include \char`\"{}funcoes.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}malloc.\+h\char`\"{}}\newline
+Include dependency graph for funcoes.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{funcoes_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structVertice}{Vertice}} $\ast$ \mbox{\hyperlink{funcoes_8c_aab929aeecad4275c9c510c9f7139d9ff}{criar\+Antena}} (char freq, int x, int y)
+\begin{DoxyCompactList}\small\item\em Cria uma nova antena com os dados fornecidos. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structVertice}{Vertice}} $\ast$ \mbox{\hyperlink{funcoes_8c_aed31fedb1e070facd83c8e0380fed379}{inserir\+Antena}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h, \mbox{\hyperlink{structVertice}{Vertice}} $\ast$nova)
+\begin{DoxyCompactList}\small\item\em Insere uma nova antena na lista ligada de forma ordenada por coordenadas. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structVertice}{Vertice}} $\ast$ \mbox{\hyperlink{funcoes_8c_ac4450091446cb031c249663306095b15}{remover\+Antena}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h, int x, int y, bool $\ast$res)
+\begin{DoxyCompactList}\small\item\em Remove uma antena da lista ligada de vértices com base nas coordenadas (x, y) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{funcoes_8c_aa8c7e09304aa051a7543e4e903e55061}{mostrar\+Antenas}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h)
+\begin{DoxyCompactList}\small\item\em Mostra no ecrã todas as antenas da lista ligada. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structVertice}{Vertice}} $\ast$ \mbox{\hyperlink{funcoes_8c_a8504cb921c483502bed722bc635f0c27}{procurar\+Antena}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h, char freq, int x, int y)
+\begin{DoxyCompactList}\small\item\em Procura uma antena na lista ligada com base nas coordenadas e frequência. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{funcoes_8c_a259a674f6dc69cb34d8971b219821c24}{reset\+Visitado}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h)
+\begin{DoxyCompactList}\small\item\em Restaura o campo \textquotesingle{}visitado\textquotesingle{} de todos os vértices da lista para 0. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structAresta}{Aresta}} $\ast$ \mbox{\hyperlink{funcoes_8c_a25e5135c96e197ff485ffde18dd03fe3}{criar\+Adjacencia}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$origem, \mbox{\hyperlink{structVertice}{Vertice}} $\ast$destino)
+\begin{DoxyCompactList}\small\item\em Cria uma nova adjacência (ligação) entre dois vértices com a mesma frequência. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structAresta}{Aresta}} $\ast$ \mbox{\hyperlink{funcoes_8c_a8217b47908fcf0b9e0fde3161c326d00}{inserir\+Adjacencia}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$origem, \mbox{\hyperlink{structAresta}{Aresta}} $\ast$nova\+Adjacencia)
+\begin{DoxyCompactList}\small\item\em Insere uma nova aresta na lista de adjacências de um vértice. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{funcoes_8c_aed57793ea473e7e45f6e9e0dbb599bf1}{mostrar\+Adjacencias}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$origem)
+\begin{DoxyCompactList}\small\item\em Mostra todas as antenas ligadas (adjacentes) a partir de um vértice (origem) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{funcoes_8c_ab2c67db9944dd91c354114b8bb5b259a}{contar\+Adjacencias}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$v)
+\begin{DoxyCompactList}\small\item\em Conta o número de adjacências (arestas) de um vértice (antena) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{funcoes_8c_a05a7c400017435a21bb727f0b2b0a63b}{depth\+First\+Traversal}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$origem)
+\begin{DoxyCompactList}\small\item\em Realiza um percurso em profundidade (DFS) a partir de uma antena. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structGrafo}{Grafo}} $\ast$ \mbox{\hyperlink{funcoes_8c_a940198e1f5db1ccd4cd7f5f7474ea4c0}{criar\+Grafo\+De\+Ficheiro}} (char $\ast$nome\+Ficheiro)
+\begin{DoxyCompactList}\small\item\em Cria um grafo (lista ligada de antenas) a partir de um ficheiro de texto com o mapa da cidade. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{funcoes_8c_a4e30f8fa0cad288209faefac1c83e29b}{gravar\+Ficheiro\+Binario}} (\mbox{\hyperlink{structVertice}{Vertice}} $\ast$h)
+\begin{DoxyCompactList}\small\item\em Grava a lista de antenas e respetivas adjacências num ficheiro binário. Para cada antena, são gravados a frequência e as coordenadas, seguidos dos dados das antenas adjacentes (frequência e coordenadas). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structVertice}{Vertice}} $\ast$ \mbox{\hyperlink{funcoes_8c_a5c66693e7d4e8d2b059190fb94b0b6e6}{ler\+Ficheiro\+Binario}} (char $\ast$nome\+Ficheiro, bool $\ast$res)
+\begin{DoxyCompactList}\small\item\em Lê um ficheiro binário e reconstrói a lista de antenas e respetivas adjacências. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Edgar Casal () 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/05-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{funcoes_8c_ab2c67db9944dd91c354114b8bb5b259a}\label{funcoes_8c_ab2c67db9944dd91c354114b8bb5b259a}} 
+\index{funcoes.c@{funcoes.c}!contarAdjacencias@{contarAdjacencias}}
+\index{contarAdjacencias@{contarAdjacencias}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{contarAdjacencias()}{contarAdjacencias()}}
+{\footnotesize\ttfamily int contar\+Adjacencias (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{v }\end{DoxyParamCaption})}
+
+
+
+Conta o número de adjacências (arestas) de um vértice (antena) 
+
+Conta quantas adjacências (arestas) tem uma dada antena.
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Apontador para o vértice cuja lista de adjacências se quer contar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Número de arestas (ligações) encontradas 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a25e5135c96e197ff485ffde18dd03fe3}\label{funcoes_8c_a25e5135c96e197ff485ffde18dd03fe3}} 
+\index{funcoes.c@{funcoes.c}!criarAdjacencia@{criarAdjacencia}}
+\index{criarAdjacencia@{criarAdjacencia}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{criarAdjacencia()}{criarAdjacencia()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structAresta}{Aresta}}$\ast$ criar\+Adjacencia (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{origem,  }\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{destino }\end{DoxyParamCaption})}
+
+
+
+Cria uma nova adjacência (ligação) entre dois vértices com a mesma frequência. 
+
+Cria uma nova ligação (aresta) entre dois vértices com a mesma frequência.
+
+
+\begin{DoxyParams}{Parameters}
+{\em origem} & Vértice de onde parte a ligação \\
+\hline
+{\em destino} & Vértice para onde a ligação aponta \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve a nova aresta criada ou NULL se não for possível criar 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_aab929aeecad4275c9c510c9f7139d9ff}\label{funcoes_8c_aab929aeecad4275c9c510c9f7139d9ff}} 
+\index{funcoes.c@{funcoes.c}!criarAntena@{criarAntena}}
+\index{criarAntena@{criarAntena}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{criarAntena()}{criarAntena()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structVertice}{Vertice}}$\ast$ criar\+Antena (\begin{DoxyParamCaption}\item[{char}]{freq,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Cria uma nova antena com os dados fornecidos. 
+
+Cria uma nova antena (vértice) com frequência e coordenadas dadas.
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & Frequência da antena (carácter entre \textquotesingle{}A\textquotesingle{} e \textquotesingle{}Z\textquotesingle{}) \\
+\hline
+{\em x} & Coordenada X da antena \\
+\hline
+{\em y} & Coordenada Y da antena \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve um apontador para a nova antena criada, ou NULL se a alocação falhar 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a940198e1f5db1ccd4cd7f5f7474ea4c0}\label{funcoes_8c_a940198e1f5db1ccd4cd7f5f7474ea4c0}} 
+\index{funcoes.c@{funcoes.c}!criarGrafoDeFicheiro@{criarGrafoDeFicheiro}}
+\index{criarGrafoDeFicheiro@{criarGrafoDeFicheiro}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{criarGrafoDeFicheiro()}{criarGrafoDeFicheiro()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structGrafo}{Grafo}}$\ast$ criar\+Grafo\+De\+Ficheiro (\begin{DoxyParamCaption}\item[{char $\ast$}]{nome\+Ficheiro }\end{DoxyParamCaption})}
+
+
+
+Cria um grafo (lista ligada de antenas) a partir de um ficheiro de texto com o mapa da cidade. 
+
+bool breadth\+First\+Traversal(\+Vertice$\ast$ origem);
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+Ficheiro} & Nome do ficheiro de entrada com o mapa \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Apontador para o grafo criado, ou NULL em caso de erro 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a05a7c400017435a21bb727f0b2b0a63b}\label{funcoes_8c_a05a7c400017435a21bb727f0b2b0a63b}} 
+\index{funcoes.c@{funcoes.c}!depthFirstTraversal@{depthFirstTraversal}}
+\index{depthFirstTraversal@{depthFirstTraversal}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{depthFirstTraversal()}{depthFirstTraversal()}}
+{\footnotesize\ttfamily bool depth\+First\+Traversal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{origem }\end{DoxyParamCaption})}
+
+
+
+Realiza um percurso em profundidade (DFS) a partir de uma antena. 
+
+Realiza uma travessia em profundidade (DFS) a partir de uma antena.
+
+
+\begin{DoxyParams}{Parameters}
+{\em origem} & Vértice de início do percurso \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se o percurso foi feito, false se a origem for inválida 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a4e30f8fa0cad288209faefac1c83e29b}\label{funcoes_8c_a4e30f8fa0cad288209faefac1c83e29b}} 
+\index{funcoes.c@{funcoes.c}!gravarFicheiroBinario@{gravarFicheiroBinario}}
+\index{gravarFicheiroBinario@{gravarFicheiroBinario}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{gravarFicheiroBinario()}{gravarFicheiroBinario()}}
+{\footnotesize\ttfamily bool gravar\+Ficheiro\+Binario (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h }\end{DoxyParamCaption})}
+
+
+
+Grava a lista de antenas e respetivas adjacências num ficheiro binário. Para cada antena, são gravados a frequência e as coordenadas, seguidos dos dados das antenas adjacentes (frequência e coordenadas). 
+
+Grava num ficheiro binário os dados das antenas e das respetivas adjacências.
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista de antenas (vértices). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se a gravação for bem-\/sucedida, false em caso de erro. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a8217b47908fcf0b9e0fde3161c326d00}\label{funcoes_8c_a8217b47908fcf0b9e0fde3161c326d00}} 
+\index{funcoes.c@{funcoes.c}!inserirAdjacencia@{inserirAdjacencia}}
+\index{inserirAdjacencia@{inserirAdjacencia}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{inserirAdjacencia()}{inserirAdjacencia()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structAresta}{Aresta}}$\ast$ inserir\+Adjacencia (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{origem,  }\item[{\mbox{\hyperlink{structAresta}{Aresta}} $\ast$}]{nova\+Adjacencia }\end{DoxyParamCaption})}
+
+
+
+Insere uma nova aresta na lista de adjacências de um vértice. 
+
+Insere uma nova ligação (aresta) na lista de adjacências de um vértice.
+
+
+\begin{DoxyParams}{Parameters}
+{\em origem} & Apontador para o vértice onde queremos inserir a ligação \\
+\hline
+{\em nova} & A nova ligação (aresta) que vai ser adicionada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve a própria aresta inserida, ou NULL se falhar 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_aed31fedb1e070facd83c8e0380fed379}\label{funcoes_8c_aed31fedb1e070facd83c8e0380fed379}} 
+\index{funcoes.c@{funcoes.c}!inserirAntena@{inserirAntena}}
+\index{inserirAntena@{inserirAntena}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{inserirAntena()}{inserirAntena()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structVertice}{Vertice}}$\ast$ inserir\+Antena (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h,  }\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{nova }\end{DoxyParamCaption})}
+
+
+
+Insere uma nova antena na lista ligada de forma ordenada por coordenadas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista de antenas \\
+\hline
+{\em nova} & Apontador para a nova antena a inserir \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve o novo início da lista (caso a nova antena seja inserida no início) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a5c66693e7d4e8d2b059190fb94b0b6e6}\label{funcoes_8c_a5c66693e7d4e8d2b059190fb94b0b6e6}} 
+\index{funcoes.c@{funcoes.c}!lerFicheiroBinario@{lerFicheiroBinario}}
+\index{lerFicheiroBinario@{lerFicheiroBinario}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{lerFicheiroBinario()}{lerFicheiroBinario()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structVertice}{Vertice}}$\ast$ ler\+Ficheiro\+Binario (\begin{DoxyParamCaption}\item[{char $\ast$}]{nome\+Ficheiro,  }\item[{bool $\ast$}]{res }\end{DoxyParamCaption})}
+
+
+
+Lê um ficheiro binário e reconstrói a lista de antenas e respetivas adjacências. 
+
+Lê o ficheiro binário e reconstrói a lista de vértices com as suas adjacências.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+Ficheiro} & Nome do ficheiro binário a abrir \\
+\hline
+{\em res} & Apontador para um booleano que indica se a leitura foi bem sucedida \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve a lista de vértices (antenas) reconstruída, ou NULL em caso de erro 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_aed57793ea473e7e45f6e9e0dbb599bf1}\label{funcoes_8c_aed57793ea473e7e45f6e9e0dbb599bf1}} 
+\index{funcoes.c@{funcoes.c}!mostrarAdjacencias@{mostrarAdjacencias}}
+\index{mostrarAdjacencias@{mostrarAdjacencias}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{mostrarAdjacencias()}{mostrarAdjacencias()}}
+{\footnotesize\ttfamily bool mostrar\+Adjacencias (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{origem }\end{DoxyParamCaption})}
+
+
+
+Mostra todas as antenas ligadas (adjacentes) a partir de um vértice (origem) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origem} & Apontador para o vértice cuja lista de adjacências se quer mostrar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se existirem adjacências, false se não houver 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_aa8c7e09304aa051a7543e4e903e55061}\label{funcoes_8c_aa8c7e09304aa051a7543e4e903e55061}} 
+\index{funcoes.c@{funcoes.c}!mostrarAntenas@{mostrarAntenas}}
+\index{mostrarAntenas@{mostrarAntenas}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{mostrarAntenas()}{mostrarAntenas()}}
+{\footnotesize\ttfamily bool mostrar\+Antenas (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h }\end{DoxyParamCaption})}
+
+
+
+Mostra no ecrã todas as antenas da lista ligada. 
+
+Mostra todas as antenas da lista ligada no ecrã
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista de vértices (antenas) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve true se existirem antenas, false se a lista estiver vazia 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a8504cb921c483502bed722bc635f0c27}\label{funcoes_8c_a8504cb921c483502bed722bc635f0c27}} 
+\index{funcoes.c@{funcoes.c}!procurarAntena@{procurarAntena}}
+\index{procurarAntena@{procurarAntena}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{procurarAntena()}{procurarAntena()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structVertice}{Vertice}}$\ast$ procurar\+Antena (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h,  }\item[{char}]{freq,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Procura uma antena na lista ligada com base nas coordenadas e frequência. 
+
+Procura uma antena na lista ligada com base na frequência e coordenadas.
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista de vértices (antenas) \\
+\hline
+{\em freq} & Frequência da antena procurada \\
+\hline
+{\em x} & Coordenada X da antena procurada \\
+\hline
+{\em y} & Coordenada Y da antena procurada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve o apontador para a antena encontrada, ou NULL se não existir 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_ac4450091446cb031c249663306095b15}\label{funcoes_8c_ac4450091446cb031c249663306095b15}} 
+\index{funcoes.c@{funcoes.c}!removerAntena@{removerAntena}}
+\index{removerAntena@{removerAntena}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{removerAntena()}{removerAntena()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structVertice}{Vertice}}$\ast$ remover\+Antena (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{bool $\ast$}]{res }\end{DoxyParamCaption})}
+
+
+
+Remove uma antena da lista ligada de vértices com base nas coordenadas (x, y) 
+
+Remove uma antena da lista ligada com base nas suas coordenadas (x, y).
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista de vértices (antenas) \\
+\hline
+{\em x} & Coordenada X da antena a remover \\
+\hline
+{\em y} & Coordenada Y da antena a remover \\
+\hline
+{\em res} & Apontador para uma variável que indica se a remoção foi bem-\/sucedida (true) ou não (false) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Devolve o novo início da lista de vértices 
+\end{DoxyReturn}
+\mbox{\Hypertarget{funcoes_8c_a259a674f6dc69cb34d8971b219821c24}\label{funcoes_8c_a259a674f6dc69cb34d8971b219821c24}} 
+\index{funcoes.c@{funcoes.c}!resetVisitado@{resetVisitado}}
+\index{resetVisitado@{resetVisitado}!funcoes.c@{funcoes.c}}
+\doxysubsubsection{\texorpdfstring{resetVisitado()}{resetVisitado()}}
+{\footnotesize\ttfamily bool reset\+Visitado (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVertice}{Vertice}} $\ast$}]{h }\end{DoxyParamCaption})}
+
+
+
+Restaura o campo \textquotesingle{}visitado\textquotesingle{} de todos os vértices da lista para 0. 
+
+Reinicia o campo \textquotesingle{}visitado\textquotesingle{} de todos os vértices da lista ligada.
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Apontador para o início da lista ligada de vértices (antenas) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true se a operação foi realizada, false se a lista estiver vazia 
+\end{DoxyReturn}
